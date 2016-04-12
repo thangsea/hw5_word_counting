@@ -1,0 +1,86 @@
+    /**
+     * Print the most frequently occurring words in the tree,
+     * along with their frequency.
+     */
+    public void PrintMostFrequent() {
+        System.out.println("Print Most Frequent Words:");
+        int maxWords = 0;  
+        LinkedList list = new LinkedList();
+        GetMostFrequent(root, list, maxWords);
+        System.out.println(getWords(list.first, MOST_FREQUENT));
+    }
+    
+    //return the words in the list with their counts, in descending order
+    String getWords(LinkedList.ListNode node, int mostFrequent) {
+        if (node.next != null) {
+            return getWords(node.next, --mostFrequent) + (mostFrequent + 1) + ". \"" +
+                   node.element.element + "\": appears " + node.element.counter + " times\n";
+        } else {
+            return mostFrequent + ". \"" + node.element.element + "\": appears " + 
+                   node.element.counter + " times\n";
+        }
+    }
+    
+    private int GetMostFrequent(AvlNode node, LinkedList list, int maxWords) {
+        //pre-order recursive traverse
+        if (node != null) {
+            if (maxWords < MOST_FREQUENT) {
+                list.insert(node);
+                maxWords++;
+            } else if (node.counter > list.first.element.counter) {
+                list.swapFirst(node);
+            }
+            maxWords = GetMostFrequent(node.left, list, maxWords);
+            maxWords = GetMostFrequent(node.right, list, maxWords);
+        }
+        return maxWords;
+    }
+    
+    /* Linked list with elements in sorted ascending order. */
+    private class LinkedList {
+        ListNode first;
+        
+        LinkedList() {
+            first = null;
+        }
+        
+        //insert the element and keep the list in sorted ascending order
+        private ListNode insert(AvlNode t, ListNode head) {
+            //case: reach the end of the list
+            if (head == null) {
+                head = new ListNode(t, null);
+                return head;
+            //case: the new element is greater than the element at the current node,
+            //move to the next node
+            } else if (t.counter > head.element.counter) {
+                head.next = insert(t, head.next);
+                return head;
+            //case: the new element is less than or equal to the element at the current node,
+            //insert the new element just in front of the current node
+            } else {
+                return new ListNode(t, head);  
+            }
+        }
+        
+        void insert(AvlNode t) {
+            first = insert(t, first);
+        }
+        
+        //insert a new node/element, remove the first node
+        void swapFirst(AvlNode t) {
+            insert(t);
+            first = first.next;
+        }                 
+        
+        //********** Node class *************/
+        class ListNode {
+            AvlNode element;
+            ListNode next;
+            ListNode(AvlNode t, ListNode nxt){
+                element = t;
+                next = nxt;
+            }
+        }
+        //**********************************/
+    }
+    
