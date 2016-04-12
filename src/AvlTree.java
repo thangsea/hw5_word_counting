@@ -16,6 +16,7 @@ import java.lang.Comparable;
 
 // adding a testing comment
 // adding a second comment
+// adding a third comment
 
 /**
  * Implements an AVL tree.
