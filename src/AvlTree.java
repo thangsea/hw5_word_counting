@@ -14,6 +14,9 @@ import java.lang.Comparable;
 // void makeEmpty( )      --> Remove all items
 // void printTree( )      --> Print tree in sorted order
 
+// adding a testing comment
+// adding a second comment
+
 /**
  * Implements an AVL tree.
  * Note that all "matching" is based on the compareTo method.
